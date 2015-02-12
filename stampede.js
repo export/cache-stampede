@@ -59,7 +59,7 @@ Stampede.prototype.set = function(key,fn,options) {
 
   return (options.upsert ? this.adapter.update(key,payload) : this.adapter.insert(key,payload))
     .then(function(d) {
-      return Promise.fulfilled((typeof fn === 'function') ? Promise.try(fn) : fn)
+      return Promise.fulfilled((typeof fn === 'function') ? Promise.try(fn, options.params) : fn)
         .catch(function(e) {
           // If the error is to be cached we transform into a JSON object
           if (e && e.cache) {
